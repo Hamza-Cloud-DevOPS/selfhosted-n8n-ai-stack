@@ -1,0 +1,18 @@
+# Whisper API — Transcripción de audio a texto
+# Wrapper HTTP sobre OpenAI Whisper para usarlo desde n8n
+# Basado en: https://github.com/jaypetersdotdev/local-whisper
+# Motor: https://github.com/openai/whisper
+
+services:
+  whisper-api:
+    build: .
+    container_name: whisper-api
+    restart: unless-stopped
+    ports:
+      - "5001:5001"
+    networks:
+      - n8n-net
+
+networks:
+  n8n-net:
+    external: true

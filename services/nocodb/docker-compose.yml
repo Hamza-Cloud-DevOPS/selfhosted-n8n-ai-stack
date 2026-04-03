@@ -1,0 +1,27 @@
+# NocoDB — Interfaz visual para bases de datos
+# Permite ver y consultar las bases de datos PostgreSQL sin usar la terminal
+# Al estar en la misma red Docker (db), detecta automáticamente los contenedores PostgreSQL
+# Repo: https://github.com/nocodb/nocodb
+
+services:
+  nocodb:
+    image: nocodb/nocodb:latest
+    container_name: nocodb
+    restart: unless-stopped
+    ports:
+      - "9093:8080"
+    volumes:
+      - nocodb_data:/usr/app/data
+    networks:
+      - db
+    # Opcional: define la URL pública y un secreto JWT fijo
+    # environment:
+    #   NC_PUBLIC_URL: "http://TU_IP:9093"
+    #   NC_AUTH_JWT_SECRET: "cambia-esto-por-un-secreto"
+
+volumes:
+  nocodb_data:
+
+networks:
+  db:
+    external: true

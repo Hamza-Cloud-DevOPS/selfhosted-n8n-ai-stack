@@ -1,0 +1,24 @@
+selfhosted-n8n-ai-stack
+Copyright 2025 Hamza
+
+This project contains the Docker configuration, architecture design,
+automation scripts, and documentation created by Hamza for deploying
+a self-hosted AI automation stack.
+
+This project does NOT contain nor redistribute the source code of the
+following third-party projects. It only provides Docker configuration
+files to orchestrate them:
+
+  - n8n (https://github.com/n8n-io/n8n) — Sustainable Use License
+  - OpenAI Whisper (https://github.com/openai/whisper) — MIT License
+  - Local Whisper wrapper (https://github.com/jaypetersdotdev/local-whisper) — MIT License
+  - LocalAI (https://github.com/mudler/LocalAI) — MIT License
+  - NocoDB (https://github.com/nocodb/nocodb) — AGPL-3.0 License
+  - Qdrant (https://github.com/qdrant/qdrant) — Apache 2.0 License
+  - pgvector (https://github.com/pgvector/pgvector) — PostgreSQL License
+  - PostgreSQL (https://www.postgresql.org/) — PostgreSQL License
+  - Portainer (https://github.com/portainer/portainer) — Zlib License
+  - Tailscale (https://github.com/tailscale/tailscale) — BSD-3-Clause License
+
+If you use this configuration or architecture as a base for your own project,
+please provide attribution by linking back to this repository.

@@ -1,0 +1,28 @@
+# PostgreSQL para n8n y agente RAG
+# Almacena datos de workflows, credenciales y documentos para RAG
+
+services:
+  postgres-rag:
+    image: postgres:10
+    container_name: Postgres_RAG
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_rag_data:/var/lib/postgresql/data
+    networks:
+      - n8n-net
+      - db
+
+volumes:
+  postgres_rag_data:
+
+networks:
+  n8n-net:
+    external: true
+  db:
+    external: true

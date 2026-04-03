@@ -1,0 +1,31 @@
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    restart: unless-stopped
+    ports:
+      - "5678:5678"  # Tailscale Funnel apunta aquí para HTTPS
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=${N8N_BASIC_AUTH_USER}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_BASIC_AUTH_PASSWORD}
+      - WEBHOOK_URL=${WEBHOOK_URL}
+    env_file:
+      - .env
+    volumes:
+      - ./n8n-data:/home/node/.n8n
+      # Monta la carpeta de whisper para acceso a archivos de audio
+      - /home/user/Docker/n8n-debian/whisper:/files
+      # Carpeta compartida para documentos RAG
+      - /home/user/Share/Rag_implement:/data/shared
+    networks:
+      - internal
+      - n8n-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+networks:
+  internal:
+    driver: bridge
+  n8n-net:
+    external: true
