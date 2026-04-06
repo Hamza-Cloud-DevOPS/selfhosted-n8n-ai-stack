@@ -36,7 +36,6 @@ El stack requiere un sistema operativo anfitrión basado en Linux. El script de 
 | **Almacenamiento** | 50 GB (SSD recomendado) | SSD NVMe |
 | **GPU** | No requerida | Compatible (IA Local/Whisper) |
 | **Sistema** | Windows 10+, macOS 12+, Linux | Linux Moderno |
-| **Python** | 3.9 o superior | - |
 | **Aviso** | *Con 4 GB, Whisper puede ir muy justo.* | *Ideal para uso fluido.* |
 
 > 🪟 **Usuarios de Windows**: Puedes montar este stack de forma nativa utilizando el **Subsistema de Windows para Linux (WSL)**. Recomendamos firmemente instalar la distribución de **Debian** en lugar de Ubuntu, ya que consume muchísimos menos recursos en segundo plano, haciéndolo ideal para montar el stack de IA de forma estable.
