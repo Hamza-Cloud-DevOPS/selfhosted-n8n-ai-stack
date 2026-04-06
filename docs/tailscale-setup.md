@@ -16,7 +16,7 @@ Esto es **necesario** para que n8n pueda recibir webhooks de Telegram, ya que Te
 |-------------|----------|
 | Abrir puertos en el router | Inseguro, expone el servidor |
 | ngrok | Limitado en versión gratuita, URL cambia |
-| Cloudflare Tunnel | Más complejo de configurar |
+| Cloudflare Tunnel | Suele ser temporal, inestable para producción y más útil para demos rápidas que para uso serio y constante |
 | **Tailscale Funnel** | ✅ Gratis, HTTPS automático, URL fija, sin abrir puertos |
 
 ---
