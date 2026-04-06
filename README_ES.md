@@ -54,7 +54,7 @@ Clona el repositorio y ejecuta el script de setup. Este script resolverá depend
 #### Para Distribuciones de Linux
 
 ```bash
-git clone https://github.com/Hamza-Cloud-DevOPS/selfhosted-n8n-ai-stack.git
+git clone https://github.com/kagebit/selfhosted-n8n-ai-stack.git
 cd selfhosted-n8n-ai-stack
 chmod +x install.sh
 sudo ./install.sh
@@ -63,7 +63,7 @@ sudo ./install.sh
 #### Para Dispositivos macOS
 
 ```bash
-git clone https://github.com/Hamza-Cloud-DevOPS/selfhosted-n8n-ai-stack.git
+git clone https://github.com/kagebit/selfhosted-n8n-ai-stack.git
 cd selfhosted-n8n-ai-stack
 chmod +x mac_install.sh
 ./mac_install.sh
