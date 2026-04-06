@@ -186,6 +186,14 @@ for CONTAINER in Postgres_RAG Postgres_Vector; do
     echo "$CONTAINER is ready."
 done
 
+echo "======================================================================="
+echo "⏳ WARNING / NOTICE:"
+echo "   The AI engine compilation (Whisper and LocalAI) will start now."
+echo "   This process downloads heavy frameworks and can take 5 to 15 minutes"
+echo "   depending on your hardware."
+echo "   Please DO NOT cancel the setup even if the terminal seems stalled."
+echo "======================================================================="
+
 echo "Starting Whisper API transcription service (Build may take several minutes)..."
 cd services/whisper && $RUN_AS $DOCKER_CMD up -d --build && cd ../..
 
