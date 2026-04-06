@@ -1,0 +1,20 @@
+# LocalAI — Servicio de Embeddings
+# Genera vectores para búsquedas semánticas en la base de datos pgvector
+# Repo: https://github.com/mudler/LocalAI
+
+services:
+  localai:
+    build: .
+    container_name: localai
+    restart: unless-stopped
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./models:/models
+    networks:
+      - n8n-net
+    # command: ["--models-path", "/models", "--embedding-only"]
+
+networks:
+  n8n-net:
+    external: true

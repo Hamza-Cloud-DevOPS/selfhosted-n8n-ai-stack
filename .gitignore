@@ -1,0 +1,58 @@
+# ========================
+# Environment & Secrets
+# ========================
+.env
+*.env
+!.env.example
+
+# ========================
+# Data & Volumes
+# ========================
+data/
+**/data/
+n8n-data/
+pgvector_data/
+qdrant_storage/
+
+# ========================
+# AI Models (too large for git)
+# ========================
+models/
+*.bin
+*.pt
+*.onnx
+*.safetensors
+
+# ========================
+# Whisper temp files
+# ========================
+uploads/
+input/
+output/
+processed/
+
+# ========================
+# Planning (internal)
+# ========================
+planing.md
+
+# ========================
+# OS files
+# ========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ========================
+# IDE
+# ========================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ========================
+# Docker
+# ========================
+docker-compose.override.yml
