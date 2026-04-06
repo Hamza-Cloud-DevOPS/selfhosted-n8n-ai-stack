@@ -69,7 +69,7 @@ Durante la instalación, el script pausará temporalmente la ejecución para que
 
 ### 2. Configurar Tailscale Funnel (Recomendado)
 
-Para que n8n sea capaz de recibir peticiones desde internet bajo un dominio HTTPS válido (imprescindible para crear webhooks con Telegram u otros), necesitas configurar Tailscale Funnel. Lanza el configurador automático desde la raíz del mismo respositorio:
+Para que n8n sea capaz de recibir peticiones desde internet bajo un dominio HTTPS válido (imprescindible para crear webhooks con Telegram u otros), necesitas configurar Tailscale Funnel. Lanza el configurador automático desde la raíz del mismo repositorio:
 
 ```bash
 chmod +x tailscale_config.sh
@@ -80,14 +80,14 @@ Este script verifica tu estado de autenticación en Tailscale, activa el servici
 
 ## Uso
 
-Una vez completada la instalación, toda la capa de orquestación arrancará sola de forma automática al iniciar sesión e incluso en futuros reinicios. Ya puedes entrar a los servicios y construir automatizaciones.
+Una vez completada la instalación, toda la capa de orquestación arrancará de forma automática al iniciar sesión e incluso en futuros reinicios. Ya puedes entrar a los servicios y construir automatizaciones.
 
 ### Acceso a las Interfaces
 
 - **n8n**: `http://localhost:5678` (Orquestador principal de flujos de trabajo)
-- **LocalAI**: `http://localhost:8081` (Interfaz Web Nativa para descargar y testear distintos LLM)
+- **LocalAI**: `http://localhost:8081` (Interfaz web nativa para descargar y probar distintos LLM)
 - **NocoDB**: `http://localhost:9093` (Visualización de PostgreSQL orientada al usuario)
-- **Portainer**: `http://localhost:9000` (Panel súper ligero para administrar logs y contenedores de Docker)
+- **Portainer**: `http://localhost:9000` (Panel superligero para administrar logs y contenedores de Docker)
 
 ### Endpoints de API Internos (Red Interna de Docker)
 
@@ -136,7 +136,7 @@ Estos endpoints no son accesibles desde fuera, pero puedes llamarlos desde n8n a
 
 ### Nodos Importables (Configuración lista para usar)
 
-Dentro de la carpeta `n8n-nodes/` encontrarás configurado y listo para marchar un **nodo tipo HTTP Request** cuya llamada apunta directamente a tu endpoint local de la API de Whisper.
+Dentro de la carpeta `n8n-nodes/` encontrarás configurado y listo para funcionar un **nodo tipo HTTP Request** cuya llamada apunta directamente a tu endpoint local de la API de Whisper.
 Para usarlo en un flujo cualquiera:
 1. Abre tu interfaz de n8n.
 2. Entra al menú lateral y haz clic en **Import from file...**

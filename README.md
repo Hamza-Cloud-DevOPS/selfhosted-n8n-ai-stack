@@ -1,4 +1,4 @@
-*🌍 Leer esto en [Español (Spanish)](README_ES.md)*
+*🌍 Read this in [Spanish (Español)](README_ES.md)*
 
 # selfhosted-n8n-ai-stack
 
@@ -36,7 +36,7 @@ The stack requires a Linux-based host environment. The automated installation sc
 | **Storage** | 50 GB (SSD recommended) | SSD NVMe |
 | **GPU** | Not required | Compatible (Local AI/Whisper) |
 | **System** | Windows 10+, macOS 12+, Linux | Linux or MacOS |
-| **Aviso** | *With 4 GB, Whisper may be tight.* | *Ideal for smooth usage.* |
+| **Note** | *With 4 GB, Whisper may be tight.* | *Ideal for smooth usage.* |
 
 > 🪟 **Windows Users**: You can deploy this stack natively using the **Windows Subsystem for Linux (WSL)**. We highly recommend installing a **Debian** WSL distribution rather than Ubuntu, as Debian consumes considerably fewer background CPU and RAM resources, making it ideal for a persistent AI stack.
 > To install Debian on Windows WSL, run: `wsl --install -d Debian` (See [official Debian WSL guide](https://wiki.debian.org/InstallingDebianOn/Microsoft/Windows/SubsystemForLinux) for details).
@@ -80,7 +80,7 @@ This script verifies your Tailscale authentication, exposes n8n via HTTPS on por
 
 ## Usage
 
-Once installed, the entire orchestration layer is started automatically. You can access the services, observe the structural topology, and begin creating workflows.
+Once installed, the entire orchestration layer starts automatically. You can access the services, observe the structural topology, and begin creating workflows.
 
 ### Accessing the Interfaces
 
@@ -96,6 +96,7 @@ Once installed, the entire orchestration layer is started automatically. You can
 - **Qdrant**: `qdrant:6333`
 - **Whisper**: `whisper:5001` (Speech-to-Text inference wrapper)
 - **LocalAI**: `localai:8081` (Local LLMs and embeddings)
+
 ### Architecture Topology
 
 ```text
@@ -158,4 +159,4 @@ This architecture uses and wraps the following third-party technologies:
 
 ## License
 
-This architecture repository is released under the **Apache License 2.0**. Reference the [LICENSE](LICENSE) file for conditions. All third-party software remains subject to its respective governing licenses.
+This architecture repository is released under the **Apache License 2.0**. Refer to the [LICENSE](LICENSE) file for conditions. All third-party software remains subject to its respective governing licenses.
