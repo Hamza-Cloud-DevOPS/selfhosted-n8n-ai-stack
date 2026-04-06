@@ -23,12 +23,7 @@ Stack completo de automatización con IA, 100% self-hosted, configurado con Dock
 
 ## Capturas de Pantalla (Screenshots)
 
-### Infraestructura y Gestión de Datos
-![Panel de Portainer](src/images/Portainer.png)
-![Interfaz de NocoDB](src/images/Nocodb.png)
-
-### Ejecución de Agente de IA en n8n
-![Flujo de Agente en n8n](src/images/N8N_flujo.gif)
+![Flujo de Agente en n8n](src/images/n8n_agent_flow.gif)
 
 ## Prerrequisitos (Prerequisites)
 
