@@ -14,7 +14,7 @@ Stack completo de automatización con IA, 100% self-hosted, configurado con Dock
 
 ## Características
 
-- **Workflows con IA Local**: Automatización completa en n8n acoplada con embeddings y LLMs totalmente locales, sin costes de APIs externas.
+- **Workflows con IA Local**: Automatización completa en n8n acoplada con embeddings y LLMs totalmente locales, sin costes de APIs externas. Puedes revisar si tu dispositivo es compatible en [canirun.ai](https://canirun.ai/).
 - **RAG y Búsquedas Vectoriales**: PostgreSQL integrado con la extensión pgvector y Qdrant para búsquedas semánticas de alto rendimiento.
 - **Integración Segura**: Script para automatizar Tailscale Funnel que provee endpoints HTTPS públicos y seguros (ideal para recibir webhooks de Telegram).
 - **Eficiencia de Recursos**: Uso de modelos optimizados y ligeros (`small` en Whisper y `all-MiniLM-L6-v2` para embeddings), aptos para hardware personal o modesto.
