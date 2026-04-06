@@ -12,35 +12,85 @@ Stack completo de automatización con IA, 100% self-hosted, configurado con Dock
 
 ---
 
-## Resumen
+## Características (Features)
 
-Este repositorio contiene la configuración necesaria para desplegar un entorno de automatización de IA en un servidor local. Utiliza Docker para orquestar los siguientes contenedores:
+- **Workflows con IA Local**: Automatización completa en n8n acoplada con embeddings y LLMs totalmente locales, sin costes de APIs externas.
+- **RAG y Búsquedas Vectoriales**: PostgreSQL integrado con la extensión pgvector y Qdrant para búsquedas semánticas de alto rendimiento.
+- **Integración Segura**: Script para automatizar Tailscale Funnel que provee endpoints HTTPS públicos y seguros (ideal para recibir webhooks de Telegram).
+- **Eficiencia de Recursos**: Uso de modelos optimizados y ligeros (`small` en Whisper y `all-MiniLM-L6-v2` para embeddings), aptos para hardware personal o modesto.
+- **Gestión Visual de Datos**: Interfaz consolidada estilo hoja de cálculo para tus bases de datos cortesía de NocoDB.
+- **Seguridad en Red**: Las redes internas de Docker creadas a medida aseguran que la comunicación de datos fundamentales permanezca aislada del exterior.
 
-- **n8n**: Orquestador de flujos de trabajo (workflows) y agentes de IA.
-- **PostgreSQL**: Base de datos relacional estándar para almacenamiento de datos RAG (Retrieval-Augmented Generation).
-- **PostgreSQL (pgvector)**: Base de datos vectorial para búsqueda semántica y almacenamiento de embeddings.
-- **Qdrant**: Base de datos vectorial de alto rendimiento alternativa.
-- **LocalAI**: Generador local de embeddings usando el modelo `all-MiniLM-L6-v2`.
-- **Whisper**: API local de voz a texto basada en el modelo Whisper de OpenAI.
-- **NocoDB**: Interfaz visual web para gestionar las bases de datos.
-- **Portainer**: Gestión visual de contenedores Docker.
-- **Tailscale Funnel**: Exposición segura mediante HTTPS (necesario para configurar webhooks externos como Telegram).
-
-La arquitectura usa redes internas de Docker para garantizar una comunicación segura entre componentes sin tener que exponer puertos al exterior de forma innecesaria.
-
-> **Nota**: Este repositorio aporta los archivos de configuración y orquestación. Todo el código fuente real ejecutado pertenece a sus respectivos repositorios oficiales (referenciados al final de este documento).
-
----
-
-## Showcase
+## Capturas de Pantalla (Screenshots)
 
 > **[🖼️ Placeholder de Contenido Multimedia]** 
 > *Reemplaza este bloque con un pantallazo de tu arquitectura, tu panel de NocoDB, o un corto GIF de tu n8n respondiendo en Telegram.*
 > `![Stack Overview](src/images/screenshot.png)`
 
----
+## Prerrequisitos (Prerequisites)
 
-## Arquitectura
+El stack requiere un sistema operativo anfitrión basado en Linux. El script de instalación automatizado ha sido probado y es compatible con Debian, Ubuntu, Fedora, CentOS y Arch Linux.
+
+> 🪟 **Usuarios de Windows**: Puedes montar este stack de forma nativa utilizando el **Subsistema de Windows para Linux (WSL)**. Recomendamos firmemente instalar la distribución de **Debian** en lugar de Ubuntu, ya que consume muchísimos menos recursos en segundo plano, haciéndolo ideal para montar el stack de IA de forma estable.
+> Para instalar Debian desde Windows WSL, introduce en tu consola: `wsl --install -d Debian` (Consulta la [guía oficial de Debian en WSL](https://wiki.debian.org/InstallingDebianOn/Microsoft/Windows/SubsystemForLinux) para más detalles).
+
+## Instalación (Installation)
+
+### 1. Configuración Automatizada
+
+Clona el repositorio y ejecuta el script de setup. Este script resolverá dependencias, creará la estructura de redes internas de Docker, rellenará las plantillas de variables de entorno y lanzará los contenedores.
+
+#### Para Distribuciones de Linux
+
+```bash
+git clone https://github.com/Hamza-Cloud-DevOPS/selfhosted-n8n-ai-stack.git
+cd selfhosted-n8n-ai-stack
+chmod +x install.sh
+sudo ./install.sh
+```
+
+#### Para Dispositivos macOS
+
+```bash
+git clone https://github.com/Hamza-Cloud-DevOPS/selfhosted-n8n-ai-stack.git
+cd selfhosted-n8n-ai-stack
+chmod +x mac_install.sh
+./mac_install.sh
+```
+
+Durante la instalación, el script pausará temporalmente la ejecución para que tengas tiempo de configurar de forma manual (y privada) las plantillas `.env` presentes en `services/n8n/`, `services/postgres-rag/` y `services/postgres-vector/`.
+
+### 2. Configurar Tailscale Funnel (Recomendado)
+
+Para que n8n sea capaz de recibir peticiones desde internet bajo un dominio HTTPS válido (imprescindible para crear webhooks con Telegram u otros), necesitas configurar Tailscale Funnel. Lanza el configurador automático desde la raíz del mismo respositorio:
+
+```bash
+chmod +x tailscale_config.sh
+sudo ./tailscale_config.sh
+```
+
+Este script verifica tu estado de autenticación en Tailscale, activa el servicio Funnel exponiendo el puerto 5678, y actualiza de inmediato tu `.env` con las URL mágicas de Webhook correctas. Tienes también instrucciones de configuración manual paso por paso en [docs/tailscale-setup.md](docs/tailscale-setup.md).
+
+## Uso (Usage)
+
+Una vez completada la instalación, toda la capa de orquestación arrancará sola de forma automática al iniciar sesión e incluso en futuros reinicios. Ya puedes entrar a los servicios y construir automatizaciones.
+
+### Acceso a las Interfaces
+
+- **n8n**: `http://localhost:5678` (Orquestador principal de flujos de trabajo)
+- **LocalAI**: `http://localhost:8081` (Interfaz Web Nativa para descargar y testear distintos LLM)
+- **NocoDB**: `http://localhost:9093` (Visualización de PostgreSQL orientada al usuario)
+- **Portainer**: `http://localhost:9000` (Panel súper ligero para administrar logs y contenedores de Docker)
+
+### Endpoints de API Internos (Red Interna de Docker)
+
+Estos endpoints no son accesibles desde fuera, pero puedes llamarlos desde n8n apuntando así:
+- **PostgreSQL RAG**: `postgres-rag:5434`
+- **PostgreSQL Vector**: `postgres-vector:5433` *(Requiere un `CREATE EXTENSION IF NOT EXISTS vector;` post-instalación)*
+- **Qdrant**: `qdrant:6333`
+- **Whisper**: `whisper:5001` (Contenedor que hace de Wrapper API para Whisper)
+
+### Topología de la Arquitectura
 
 ```text
 ┌────────────────────────────────────────────────────────────────────────┐
@@ -74,132 +124,19 @@ La arquitectura usa redes internas de Docker para garantizar una comunicación s
 │                                                                        │
 │  NocoDB autodetecta las bases de datos al compartir la misma red.      │
 └────────────────────────────────────────────────────────────────────────┘
-
-┌─────────────┐
-│  Portainer  │  ← Panel de gestión Docker
-│   :9000     │
-└─────────────┘
 ```
 
-### Topología de Redes
+### Nodos Importables (Configuración lista para usar)
 
-| Red | Servicios asignados | Propósito |
-|-----|-----------|-----------|
-| `n8n-net` | n8n, Postgres RAG, Postgres Vector, Qdrant, Whisper, LocalAI | Capa principal de comunicación entre servicios de IA y n8n. |
-| `db` | NocoDB, Postgres RAG, Postgres Vector | Red de visualización y gestión para las bases de datos. |
-| `internal` | n8n | Red secundaria aislada exclusiva de n8n. |
-| `portainer_default` | Portainer | Red de administración para Docker. |
+Dentro de la carpeta `n8n-nodes/` encontrarás configurado y listo para marchar un **nodo tipo HTTP Request** cuya llamada apunta directamente a tu endpoint local de la API de Whisper.
+Para usarlo en un flujo cualquiera:
+1. Abre tu interfaz de n8n.
+2. Entra al menú lateral y haz clic en **Import from file...**
+3. Carga el archivo ubicado en `n8n-nodes/http-request-whisper.json`.
 
----
+## Agradecimientos (Acknowledgments)
 
-## Guía de Instalación
-
-### 1. Prerrequisitos
-
-El stack requiere un sistema host basado en Linux. El script de instalación automatizado es compatible con Debian, Ubuntu, Fedora, CentOS y Arch Linux.
-
-> 🪟 **Usuarios de Windows**: Puedes montar este stack de forma nativa utilizando **Windows Subsystem for Linux (WSL)**. Te recomendamos firmemente instalar la distribución de **Debian** en lugar de Ubuntu, ya que consume muchísimos menos recursos (RAM y CPU) en segundo plano.
-> Para instalar Debian desde Windows WSL, introduce: `wsl --install -d Debian` (Consulta [la guía oficial de Debian en WSL](https://wiki.debian.org/InstallingDebianOn/Microsoft/Windows/SubsystemForLinux) para más detalles).
-
-### 2. Configuración Automatizada
-
-Clona el repositorio y ejecuta el script automatizado. El script resolverá las dependencias necesarias, creará las redes, generará los archivos `.env` y desplegará el stack.
-
-#### Para Distribuciones Linux
-
-```bash
-git clone https://github.com/Hamza-Cloud-DevOPS/selfhosted-n8n-ai-stack.git
-cd selfhosted-n8n-ai-stack
-chmod +x install.sh
-sudo ./install.sh
-```
-
-#### Para Dispositivos macOS
-
-```bash
-git clone https://github.com/Hamza-Cloud-DevOPS/selfhosted-n8n-ai-stack.git
-cd selfhosted-n8n-ai-stack
-chmod +x mac_install.sh
-./mac_install.sh
-```
-
-Durante la ejecución, el script se pausará para permitirte editar manualmente tus variables seguras `.env` presentes en `services/n8n/`, `services/postgres-rag/` y `services/postgres-vector/`.
-
-### 3. Configuración de Tailscale Funnel (Recomendado)
-
-Para que n8n pueda recibir webhooks seguros por HTTPS (imprescindible para Telegram y otras integraciones), debes configurar Tailscale Funnel. Ejecuta el configurador automático desde la raíz del repositorio:
-
-```bash
-chmod +x tailscale_config.sh
-sudo ./tailscale_config.sh
-```
-
-Este script verificará tu autenticación de Tailscale, expondrá n8n vía HTTPS en el puerto 5678 y actualizará automáticamente tu `.env` con las URLs de webhook correctas. Para instrucciones manuales paso a paso, consulta [docs/tailscale-setup.md](docs/tailscale-setup.md).
-
----
-
-## Detalle de los Servicios
-
-### n8n (Orquestador de Workflows)
-- **Puerto**: `5678`
-- **Uso**: Creación de lógicas, flujos de trabajo, automatizaciones y agentes de inteligencia artificial.
-
-### PostgreSQL RAG
-- **Puerto**: `5434`
-- **Imagen**: `postgres:16`
-- **Uso**: Almacenamiento persistente para contextos RAG y ajustes del orquestador.
-
-### PostgreSQL Vector
-- **Puerto**: `5433`
-- **Imagen**: `ankane/pgvector:latest`
-- **Uso**: Almacenamiento vectorizado para búsquedas semánticas profundas. *Nota: Requiere ejecutar un `CREATE EXTENSION IF NOT EXISTS vector;` post-instalación (el script lo intenta automáticamente).*
-
-### Qdrant
-- **Puerto**: `6333`
-- **Imagen**: `qdrant/qdrant`
-- **Uso**: Motor de base de datos vectorial enfocado a alto rendimiento de red.
-
-### Whisper API
-- **Puerto**: `5001`
-- **Build**: Wrapper personalizado para API basándose en [openai/whisper](https://github.com/openai/whisper).
-- **Uso**: Inferencia de voz-a-texto manejando peticiones HTTP generadas desde n8n. Por defecto usa el modelo `small` para hardware humilde, pero puedes cambiarlo (`medium`, `large-v3`, etc.) en el propio Dockerfile si tu servidor es más potente.
-
-### LocalAI
-- **Puerto**: `8081`
-- **Build**: Entorno LocalAI.
-- **Uso**: Emula un endpoint estándar para calcular embeddings locales a través del modelo `all-MiniLM-L6-v2`. Al exponer el puerto `8081` de forma host, tienes un acceso GUI Nativo web entrando en `http://localhost:8081`. Desde allí puedes descargar o gestionar los modelos directamente en el navegador según te permita tu hardware.
-
-### NocoDB
-- **Puerto**: `9093`
-- **Imagen**: `nocodb/nocodb:latest`
-- **Uso**: Interfaz en formato hoja de cálculo dinámica (estilo Airtable) apuntando a las bases de datos PostgreSQL.
-
-### Portainer
-- **Puerto**: `9000`
-- **Imagen**: `portainer/portainer-ce:latest`
-- **Uso**: Actúa como la alternativa ligera web al pesado Docker Desktop. Da interfaz visual y monitorización en tiempo real sobre recursos, redes y registros a lo largo de todo el stack de forma eficientísima.
-
----
-
-## Nodos y Flujos
-
-Incluido en la carpeta `n8n-nodes/` está configurado el **nodo HTTP Request** listo para llamar al endpoint de la Whisper API de forma nativa. Simplemente:
-1. Abre n8n y crea un flujo en blanco.
-2. Clica botón derecho o ve al menú para seleccionar **Import from file**.
-3. Selecciona `n8n-nodes/http-request-whisper.json`.
-
----
-
-## Principios de la Arquitectura
-
-- **Eficiencia Limitada de Redursos**: Mantener los baremos de los modelos bajo el ratio Whisper `small` y LocalAI `all-MiniLM-L6-v2` permite trabajar consistentemente sin sobrecargar gráficamente el ordenador personal.
-- **Segregación de Datos**: Las redes internas capadas por Docker previenen que el tráfico sea accesible de manera pública.
-- **Simplificación Herramientas Dev**: Usamos las redes cruzadas para conectar automáticamente NocoDB al resto eludiendo los comandos de SQL tediosos desde consola.
-- **Acceso Remoto con Tailscale**: Al montarse y asegurarse sobre criptografía **WireGuard**, Tailscale Funnel proporciona una encriptación y soporte **persistente y permanente** superando con creces la duración e inconvenientes temporales clásicos como túneles Ngrok gratuitos o TryCloudflare.
-
----
-
-## Referencias Oficiales (Upstream)
+Se hace uso directo de las siguientes tecnologías de software libre de terceros:
 
 | Componente | Fuente Original | Licencia |
 |----------|-------------|----------|
@@ -214,8 +151,6 @@ Incluido en la carpeta `n8n-nodes/` está configurado el **nodo HTTP Request** l
 | Portainer | [github.com/portainer/portainer](https://github.com/portainer/portainer) | Zlib |
 | Tailscale | [github.com/tailscale/tailscale](https://github.com/tailscale/tailscale) | BSD-3-Clause |
 
----
-
 ## Licencia
 
-Este clúster de conocimiento e infraestructura de arquitectura está respaldado y publicado bajo la variante de licencia **Apache License 2.0**. Puedes verificar la confirmación legal en el documento [LICENSE](LICENSE). Obviamente todo el software secundario de terceros que orquesta tiene sus propias variantes expuestas de licencias originales.
+Este clúster de conocimiento e infraestructura de arquitectura está respaldado y publicado bajo la variante de licencia **Apache License 2.0**. Puedes verificar la confirmación legal en el documento [LICENSE](LICENSE). Obviamente todo el software secundario de terceros que orquesta tiene sus propias variantes expuestas de licencias originales correspondientes.
